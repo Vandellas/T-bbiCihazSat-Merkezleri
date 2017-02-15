@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/Site.css" rel="stylesheet" />
+@if (TempData["KayıtDurum"] != null)
+{
+    <p class="alert alert-danger" id="successMessage" title="Kayıt Sonucu"><strong>@TempData["KayıtDurum"]</strong></p>
+}
+<div class="wrapper">
+    <form method="post" action="/YetkiliGiris/Index" class="form-signin">
+
+
+        <h2 class="form-signin-heading">Oturum Aç</h2>
+        <input type="text" class="form-control" name="kullanıcıadı" placeholder="Kullanıcı Adınız" required="" autofocus="" />
+        <input type="password" class="form-control" name="sifre" placeholder="Şifreniz" required="" />
+        <br />
+        <button class="btn btn-lg btn-info btn-block" type="submit">Oturum Aç</button>
+
+    </form>
+</div>

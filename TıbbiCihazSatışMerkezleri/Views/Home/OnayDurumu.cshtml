@@ -1,0 +1,130 @@
+﻿@model  List<TıbbiCihazSatışMerkezleri.Models.FirmaBilgileridb>
+@{
+    ViewBag.Title = "OnayDurumu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/scripts/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="~/scripts/jquery-1.12.4.js"></script>
+<script src="~/scripts/jquery-ui.js"></script>
+<script src="~/scripts/bootstrap-modal.js"></script>
+<script src="~/scripts/bootstrap-modalmanager.js"></script>
+ <head>
+    <link href="~/Content/Site.css" rel="stylesheet" />
+</head>
+<script>
+
+    function Modal() {
+        $(document).ready(function () {
+            $("#myModal").modal("show");
+        });
+    }
+    function İptalEt()
+    {
+        $("#form").submit();
+    }
+
+
+</script>
+ @if (TempData["OnayDurumu"] != null&& TempData["durumiptal"] == null)
+ {
+
+     <script>
+         Modal();
+     </script>
+     
+ }
+else if(TempData["durumiptal"] != null)
+{
+    
+    <p class="alert alert-danger">@TempData["durumiptal"]</p>
+     
+}
+    <div class="wrapper">
+        <form method="post" id="form" action="/Home/OnayDurumu" class="form-signin">
+
+
+            <h2 class="form-signin-heading">Onay Durumu</h2>
+            <input type="number" class="form-control" id="VergiNumarası" name="VergiNumarası" placeholder="VergiNumaranız" required="" autofocus="" />
+            <input type="number" class="form-control" max="2147483647" name="OnayKodu" placeholder="OnayKodu" required="" />
+            <br />
+            <button class="btn btn-lg btn-info btn-block" name="sbmtbtn" value="0" type="submit">Kontrol et</button>
+
+
+            <div id="myModal" class="modal fade" style="z-index: 9999;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title text-info">@TempData["OnayDurumu"]</h4>
+                        </div>
+                        @if (Model != null)
+                        {
+                            <div class="modal-body">
+
+                                <table id="myTableData" name="myTableData" class="table table-hover">
+                                    <tr>
+                                        <th>Vergi Numarası</th>
+                                        <th>Firma Adı</th>
+                                        <th>Firma Sahibi Adı Soyadı</th>
+                                        <th>İl</th>
+                                        <th>İlçe</th>
+                                        <th>Firma Tipi</th>
+                                    </tr>
+                                    <tbody>
+                                        <tr>
+                                            <td>@Model[0].VergiNo</td>
+                                            <td>@Model[0].FirmaAdı</td>
+                                            <td>@Model[0].FirmaSahibidb.FirstOrDefault().AdıSoyadı</td>
+                                            <td>@Model[0].il</td>
+                                            <td>@Model[0].ilce</td>
+                                            @if (Model[0].Type == "0")
+                                            {
+                                                <td>Merkez</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Şube</td>
+                                            }
+
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+                                
+                            </div>
+                            if (Model[0].FirmaDurum.FirstOrDefault().Durum == 0 || Model[0].FirmaDurum.FirstOrDefault().Durum == 1)
+                            {
+                                <p class="text-danger col-md-5 col-md-push-8" >İptal Etmek İstermisiniz?</p>
+
+                            <div class="modal-footer">
+                             
+                                
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Hayır</button>
+                                    <button type="button"  onclick="İptalEt();" name="sbmtbtn" value="1"  class="btn btn-primary">İptal Et</button>
+                                
+                            </div>
+                            }
+                       else if (Model[0].FirmaDurum.FirstOrDefault().Durum == 2 )
+                            {
+                                <p class="text-danger col-md-5 col-md-push-8">Günceleme Yapmak İstermsiniz?</p>
+
+                                <div class="modal-footer">
+
+
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Hayır</button>
+                                    <a href="/Home/Güncelle" class="btn btn-primary">Evet</a>           
+                                </div>
+                            }
+                        }
+                    </div>
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+ 
+

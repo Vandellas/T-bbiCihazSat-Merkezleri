@@ -1,0 +1,74 @@
+﻿@model  List<TıbbiCihazSatışMerkezleri.Models.FirmaSahibidb>
+@{
+    ViewBag.Title = "FirmaGörüntüle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <form method="post" class="form-horizontal" action="/Firmaincele/FirmaGörüntüle">
+        <fieldset>
+            <legend>Firma Bilgileri</legend>
+            <!-- Appended Input-->
+            <div class="form-group">
+                <div class="col-md-3">
+                    <select name="secenek" class="form-control">
+                        <option value="5">Hepsini Getir</option>
+                        <option value="0">VergiNumarası</option>
+                        <option value="1">Firma Adı</option>
+                        <option value="2">Firma Sahibi Adı Soyadı</option>
+                        <option value="3">İl</option>
+                        <option value="4">Firma Tipi</option>
+                        <option value="6">Red Edilen Firmalar</option>
+                        <option value="7">Kabul Edilen Firmalar</option>
+                        <option value="8">Hem Red Hem Kabul Edilen Firmalar</option>
+                        <option value="9">İptal Edilen Firmalar</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <input type="text" name="sorgula" class="form-control" />
+                        <span class="input-group-btn">
+                            <button type="submit" name="görüntüle" value="select" class="btn btn-info ">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+        </fieldset>
+        <hr class="has-warning list-inline">
+        <table id="myTableData" name="myTableData" class="table table-hover">
+            <tr>
+                <th>Vergi Numarası</th>
+                <th>Firma Adı</th>
+                <th>Firma Sahibi Adı Soyadı</th>
+                <th>İl</th>
+                <th>İlçe</th>
+                <th>Firma Tipi</th>
+            </tr>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>@Model[i].FirmaBilgileridb.VergiNo</td>
+                        <td>@Model[i].FirmaBilgileridb.FirmaAdı</td>
+                        <td>@Model[i].AdıSoyadı</td>
+                        <td>@Model[i].FirmaBilgileridb.il</td>
+                        <td>@Model[i].FirmaBilgileridb.ilce</td>
+                        @if (Model[i].FirmaBilgileridb.Type == "0")
+                        {
+                            <td>Merkez</td>
+                        }
+                        else
+                        {
+                            <td>Şube</td>
+                        }
+                        <td><button type="submit" class="btn-primary" name="görüntüle" value=@Model[i].FirmaBilgileridb.id>Görüntüle</button></td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </form>
+</div>

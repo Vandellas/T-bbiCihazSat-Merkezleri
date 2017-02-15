@@ -1,0 +1,304 @@
+﻿@model  List<TıbbiCihazSatışMerkezleri.Models.FirmaSahibidb>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@if (Model.Count > 0)
+{
+    <br />
+    <br />
+    <center><p class="text text-success">İşleminiz Başarılı Şekilde Tamamlanmıştır.</p></center>
+    <center><p class="text text-danger">Onay Kodunuz:@Model[0].FirmaBilgileridb.FirmaDurum.FirstOrDefault().Kontrolid</p></center>
+    <input type="hidden" value=@Model[0].FirmaBilgileridb.FirmaDurum.First().Kontrolid name="kontrolid" />
+        <div class="col-lg-12  col-sm-12 col-md-12 col-xs-12">
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="panel-title-text">Firma Adres Ve İletişim Bilgileri</span></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">İl: </label>
+                                @Html.TextBox("il", Model[0].FirmaBilgileridb.il, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardCVC">İlçe: </label>
+                                @Html.TextBox("ilce", Model[0].FirmaBilgileridb.ilce, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Posta Kodu:</label>
+                                @Html.TextBox("PostaNo", Model[0].FirmaBilgileridb.PostaKodu, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Fax No:</label>
+                                @Html.TextBox("FaxNo", Model[0].FirmaBilgileridb.FaxNo, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Telefon No:</label>
+                                @Html.TextBox("TelNo", Model[0].FirmaBilgileridb.TelNo, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Telefon No2: </label>
+                                @Html.TextBox("TelNo2", Model[0].FirmaBilgileridb.TelNo2, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Web Sitesi Adı:</label>
+                                @Html.TextBox("WebSite", Model[0].FirmaBilgileridb.WebSite, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Firma E-Postası:</label>
+                                @Html.TextBox("Eposta", Model[0].FirmaBilgileridb.FirmaEposta, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Vergi Dairesi:</label>
+                                @Html.TextBox("VergiDaire", Model[0].FirmaBilgileridb.VergiDairesi, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="cardExpiry">Mahalle:</label>
+                                    @Html.TextBox("Mahalle", Model[0].FirmaBilgileridb.Mahalle, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="cardExpiry">Cadde:</label>
+                                    @Html.TextBox("Cadde", Model[0].FirmaBilgileridb.Cadde, new { @class = "form-control", @readonly = "readonly" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="cardExpiry">Sokak:</label>
+                                    @Html.TextBox("Sokak", Model[0].FirmaBilgileridb.Sokak, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Dış Kapı No:</label>
+                                @Html.TextBox("DışNo", Model[0].FirmaBilgileridb.DışKapıNo, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">İç kapı No:</label>
+                                @Html.TextBox("İçNo", Model[0].FirmaBilgileridb.İçKapıNo, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12  col-sm-12 col-md-12 col-xs-12">
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="panel-title-text">1. Firma Sahibi Bilgileri</span></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">T.C. Kimlik No:</label>
+                                @Html.TextBox("firmaTcNo", Model[0].TcNo, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Adı Soyadı:</label>
+                                @Html.TextBox("firmaAdıSoyadı", Model[0].AdıSoyadı, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="col-lg-12  col-sm-12 col-md-12 col-xs-12">
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="panel-title-text">2.	Mesul Müdür Bilgileri</span></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">T.C. Kimlik No:</label>
+                                @Html.TextBox("MüdürTcNo", Model[0].FirmaBilgileridb.MesulMüdürüdb.First().TcNo, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Adı Soyadı:</label>
+                                @Html.TextBox("MüdürAdSoyad", Model[0].FirmaBilgileridb.MesulMüdürüdb.First().AdıSoyadı, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Sertifika No:</label>
+                                @Html.TextBox("MüdürSertifikaNo", Model[0].FirmaBilgileridb.MesulMüdürüdb.First().SertifikaNo, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Sertifika Tarihi:</label>
+                                @Html.TextBox("MüdürSertifikaTarihi", Model[0].FirmaBilgileridb.MesulMüdürüdb.First().SertfikaTarihi, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    for (int i = 0; i < Model[0].FirmaBilgileridb.PersonelBilgileridb.Count; i++)
+    {
+
+        <div id="personel" class="col-lg-7 col-lg-pull-2 col-md-6 col-md-offset-4 col-xs-12">
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="panel-title-text">Persel Bilgileri-@(i + 1)</span></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">T.C. Kimlik No:</label>
+                                @Html.TextBox("TcNo", Model[0].FirmaBilgileridb.PersonelBilgileridb.ElementAt(i).TcNo, new { @class = "form-control", placeholder = "Tc Numaranız", autocomplete = "off", required = "required", id = "TcNo", onblur = "tckontrol(this);", name = "personel" + i + 1, maxlength = "11", pattern = ".{11,}" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Adı Soyadı:</label>
+                                @Html.TextBox("AdSoyad", Model[0].FirmaBilgileridb.PersonelBilgileridb.ElementAt(i).AdıSoyadı, new { @class = "form-control", required = "required", placeholder = "Ad Soyad", autocomplete = "off", id = "AdSoyad", name = "personel" + i + 1 })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Sertifika No:</label>
+                                @Html.TextBox("SertifikaNo", Model[0].FirmaBilgileridb.PersonelBilgileridb.ElementAt(i).SertifikaNo, new { @class = "form-control", required = "required", placeholder = "Sertifika Numarası", autocomplete = "off", id = "SertifikaNo", name = "personel" + i + 1 })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Sertifika Tarihi:</label>
+                                <input class="form-control" required value=@Model[0].FirmaBilgileridb.PersonelBilgileridb.ElementAt(i).SertifikaTarihi type="date" autocomplete="off" max=@DateTime.Now.ToString("yyyy-MM-dd") id="SertifikaTarih" name="personel1" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Sertifika Türü:</label>
+                                @Html.TextBox("SertifikaTürü", Model[0].FirmaBilgileridb.PersonelBilgileridb.ElementAt(i).SertifikaTürü, new { @class = "form-control", required = "required", placeholder = "Sertifika Türü", autocomplete = "off", id = "SertifikaTürü", name = "personel" + i + 1 })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+
+
+        <div class="col-lg-12  col-sm-12 col-md-12 col-xs-12">
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="panel-title-text">1.	İş Yeri Açma ve Çalıştırma Ruhsatı</span></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">İşyeri Ruhsat Tarihi:</label>
+                                @Html.TextBox("irt", Model[0].FirmaBilgileridb.FirmaDosyalarıdb.First().İşyeriRuhsatTarihi, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Çalışma Alanı:</label>
+
+                                <div class="input-group">
+                                    @Html.TextBox("ÇalışmaAlanı", Model[0].FirmaBilgileridb.FirmaDosyalarıdb.First().ÇalışmaAlanı, new { @class = "form-control", @readonly = "readonly" })
+                                    <span class="input-group-addon">M<sup>2</sup></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">İşyeri Ruhsat No:</label>
+                                @Html.TextBox("irn", Model[0].FirmaBilgileridb.FirmaDosyalarıdb.First().İşyeriRuhsatNo, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Deneme Odası:</label>
+                                <div class="input-group">
+                                    @Html.TextBox("vergiNO", Model[0].FirmaBilgileridb.FirmaDosyalarıdb.First().DenemeOdası, new { @class = "form-control", @readonly = "readonly" })
+                                    <span class="input-group-addon">M<sup>2</sup></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label " for="appendedtext">İşyeri Ruhsatı (Bir) yıl Süreli Mi?:</label>
+                                <input class="form-control" type="text" value=@Model[0].FirmaBilgileridb.FirmaDosyalarıdb.First().işyeriaçma name="check" readonly />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+}

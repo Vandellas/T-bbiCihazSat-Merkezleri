@@ -1,0 +1,496 @@
+﻿@model  IEnumerable<object>
+@{
+    List<TıbbiCihazSatışMerkezleri.Models.FirmaSahibidb> sahip= Model.ToList()[0] as List<TıbbiCihazSatışMerkezleri.Models.FirmaSahibidb>;
+    TıbbiCihazSatışMerkezleri.Models.iller il = Model.ToList()[1] as TıbbiCihazSatışMerkezleri.Models.iller;
+   <meta charset="utf-8" />
+    ViewBag.Title = "Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Güncelle</h2>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="~/scripts/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="~/scripts/jquery-1.12.4.js">
+
+</script>
+<script src="~/scripts/jquery-ui.js"></script> 
+<script src="~/scripts/jquery.maskedinput.js"></script>
+<script src="~/scripts/jquery.maskedinput.min.js"></script>
+<script>
+    $(function () {
+
+
+        $('#il option:contains(' + '@(sahip[0].FirmaBilgileridb.il)'+ ')').prop({ selected: true });
+        Getİlce();
+
+        $("#il").change(function () {//İl seçildiğinde jquery change fonksiyonu ile işlemi yakaladık.
+            Getİlce();
+        });
+
+    });
+    function Getİlce()
+    {
+        var param = { id: $("#il").val() };//il id'sini $(this).val() diyerek aldık değişkene attık attık.
+        $.getJSON("/Home/Getİlce/", param, function (data) {//Controller içine yeni eklediğimiz Json metoduna gönderdik id'mizi ve dönen sonuçları döngüye sokarak dropdown listemize ekledik.
+            $("#ilceler").html("");//Her seferinde dropdown listemizin içini boşaltmamız gerekir yoksa bütün ilçeler tek dropdown'da birleşir.Örn. İstanbul seçtiniz ilçeleri doldurdu sonra Ankara seçtinizi Ankaranın ilçelerinide istanbulla birlikte yazar.
+            $("#ilceler").append($('<option/>', {//Default olarak Seçiniz ekledik.
+                value: "0",
+                text: "Seçiniz"
+            }));
+            if (data != 0) {//Dönen değer 0 değilse dropdown listemizi veri tabanından gelenler ile doldurduk.
+                $("#ilceler").html("");
+                $.each(data, function (i, item) {//Burda JQuery each döngüsü ile dönen değerleri dropdown listemize doldurduk.
+                    $("#ilceler").append($('<option/>', {
+                        value: item.Value,//Controller kısmında dinamik olarak verdiğimiz isimleri yazıyoruz buraya item.Value ve item.Text bunlar controllerden gelen değerleri dropdown listemize dolduruyor.
+                        text: item.Text
+
+                    }));
+                });
+
+            }
+
+            $('#ilceler option:contains(' + '@(sahip[0].FirmaBilgileridb.ilce)' + ')').prop({ selected: true });
+           alert( '@(sahip[0].FirmaBilgileridb.ilce)');
+
+        });
+    }
+    var checkTcNum = function (value) {
+        value = value.toString();
+        var isEleven = /^[0-9]{11}$/.test(value);
+        var totalX = 0;
+        for (var i = 0; i < 10; i++) {
+            totalX += Number(value.substr(i, 1));
+        }
+        var isRuleX = totalX % 10 == value.substr(10, 1);
+        var totalY1 = 0;
+        var totalY2 = 0;
+        for (var i = 0; i < 10; i += 2) {
+            totalY1 += Number(value.substr(i, 1));
+        }
+        for (var i = 1; i < 10; i += 2) {
+            totalY2 += Number(value.substr(i, 1));
+        }
+        var isRuleY = ((totalY1 * 7) - totalY2) % 10 == value.substr(9, 0);
+        return isEleven && isRuleX && isRuleY;
+    };
+
+
+    function tckontrol(tcno) {
+        var isValid = checkTcNum(tcno.value);
+        console.log('isValid ', isValid);
+        if (isValid) {
+            tcno.setCustomValidity('');
+            return true;
+        }
+        else {
+            tcno.setCustomValidity('Böyle Bir Tc Numarası Bulunmamaktadır!');
+            return false;
+        }
+    }
+    function checkURL(url) {
+        var string = url.value;
+        if (!~string.indexOf("http")) {
+            string = "http://" + string;
+        }
+        url.value = string;
+        return url
+    }
+    jQuery(function ($) {
+        $("#tel").mask("(999) 999-9999");
+        $("#tel2").mask("(999) 999-9999");
+        $("#FaxNo").mask("(999) 999-9999");
+
+    });
+
+</script>
+<form action="/Home/Güncelle" id="form" method="post" enctype="multipart/form-data" >
+    <input type="hidden" value=@sahip[0].FirmaBilgileridb.il id="ilhide">
+    @if (TempData["Onaylama"] != null)
+    {
+        <p class="alert alert-success" id="successMessage" title="Kayıt Sonucu"><strong>@TempData["Onaylama"]</strong></p>
+    }
+    @if (sahip.Count > 0)
+    {
+        <div class="col-lg-7 col-lg-pull-2 col-md-6 col-md-offset-4 col-xs-12">
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="panel-title-text">Firma Adres Ve İletişim Bilgileri</span></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">İl: </label>
+                                @Html.DropDownListFor(a=>il.sehirid, ViewBag.illist as SelectList, "Seçiniz", new { @class = "form-control", id = "il", Name = "il", required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardCVC">İlçe: </label>
+                                <select id="ilceler" name="ilce" class="form-control" required></select>                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Posta Kodu:</label>
+                                @Html.TextBox("PostaNo", sahip[0].FirmaBilgileridb.PostaKodu, new { @class = "form-control",Type="number", required = "required", name= "PostaNo" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Fax No:</label>
+                                @Html.TextBox("FaxNo", sahip[0].FirmaBilgileridb.FaxNo, new { @class = "form-control", required = "required",name="FaxNo",id= "FaxNo" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Telefon No:</label>
+                                @Html.TextBox("TelNo", sahip[0].FirmaBilgileridb.TelNo, new { @class = "form-control", required = "required",name="TelNo",id= "tel" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Telefon No2: </label>
+                                @Html.TextBox("TelNo2", sahip[0].FirmaBilgileridb.TelNo2, new { @class = "form-control", required = "required",name="TelNo2",id= "tel2" })
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Web Sitesi Adı:</label>
+                                <input class="form-control" value=@sahip[0].FirmaBilgileridb.WebSite placeholder="Web Siteniz" type="url" onblur="checkURL(this);" name="WebSite" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Firma E-Postası:</label>
+                                @Html.TextBox("Eposta", sahip[0].FirmaBilgileridb.FirmaEposta, new { @class = "form-control", required = "required",name="Eposta", type = "email" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Vergi Dairesi:</label>
+                                @Html.TextBox("VergiDaire", sahip[0].FirmaBilgileridb.VergiDairesi, new { @class = "form-control", required = "required",name= "VergiDaire" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="cardExpiry">Mahalle:</label>
+                                    @Html.TextBox("Mahalle", sahip[0].FirmaBilgileridb.Mahalle, new { @class = "form-control", required = "required",name="Mahalle" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="cardExpiry">Cadde:</label>
+                                    @Html.TextBox("Cadde", sahip[0].FirmaBilgileridb.Cadde, new { @class = "form-control", required = "required",name="Cadde" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="cardExpiry">Sokak:</label>
+                                    @Html.TextBox("Sokak", sahip[0].FirmaBilgileridb.Sokak, new { @class = "form-control", required = "required",name="Sokak" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Dış Kapı No:</label>
+                                @Html.TextBox("DışKapıNo", sahip[0].FirmaBilgileridb.DışKapıNo, new { @class = "form-control",Type="number", required = "required",name="DışKapıNo" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">İç kapı No:</label>
+                                @Html.TextBox("İçKapıNo", sahip[0].FirmaBilgileridb.İçKapıNo, new { @class = "form-control",Type="number", required = "required",name="İçKapıNo"})
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="col-lg-7 col-lg-pull-2 col-md-6 col-md-offset-4 col-xs-12">
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="panel-title-text">1. Firma Sahibi Bilgileri</span></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">T.C. Kimlik No:</label>
+                                <input class="form-control" type="text" value=@sahip[0].TcNo placeholder="Tc Numaranız" id="firmaTcNo" onblur="tckontrol(this);" name="firmaTcNo" maxlength="11" pattern=".{11,}" onkeypress=' return event.charCode>= 48 && event.charCode <= 57' required title="11 haneli Tc numaranızı giriniz" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Adı Soyadı:</label>
+                                @Html.TextBox("firmaAdıSoyadı", sahip[0].AdıSoyadı, new { @class = "form-control", required = "required",name= "firmaAdıSoyadı" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Yazılı Hizmet Sözleşmesi:</label>
+                                <a href="data:application/pdf;base64, @System.Convert.ToBase64String((Byte[])sahip[0].HizmetSözleşmesi)" class="btn btn-primary" target="_blank" type="application/pdf">Görüntüle</a>
+                                <input type="file" value="null" name="yhs" id="yhs" accept=".pdf"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="col-lg-7 col-lg-pull-2 col-md-6 col-md-offset-4 col-xs-12">
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="panel-title-text">2.	Mesul Müdür Bilgileri</span></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">T.C. Kimlik No:</label>
+                                <input class="form-control" placeholder="Tc Numaranız" value=@sahip[0].FirmaBilgileridb.MesulMüdürüdb.First().TcNo type="text" onblur="tckontrol(this);" name="MüdürTcNo" maxlength="11" pattern=".{11,}" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required title="11 haneli Tc numaranızı giriniz" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Adı Soyadı:</label>
+                                @Html.TextBox("MüdürAdSoyad", sahip[0].FirmaBilgileridb.MesulMüdürüdb.First().AdıSoyadı, new { @class = "form-control",name= "MüdürAdSoyad", required = "required" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Sertifika No:</label>
+                                @Html.TextBox("MüdürSertifikaNo", sahip[0].FirmaBilgileridb.MesulMüdürüdb.First().SertifikaNo, new { @class = "form-control",name= "MüdürSertifikaNo", required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Sertifika Tarihi:</label>
+                                <input class="form-control" type="date" value=@sahip[0].FirmaBilgileridb.MesulMüdürüdb.First().SertfikaTarihi name="MüdürSertifikaTarihi" required />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Sertifika Dosyası:</label>
+                                <a href="data:application/pdf;base64, @System.Convert.ToBase64String((Byte[])sahip[0].FirmaBilgileridb.MesulMüdürüdb.First().SertifikaDosyası)" class="btn btn-primary" type="application/pdf" target="_blank">Görüntüle</a>
+                                <input type="file" name="msd"  accept=".pdf"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
+                            for (int i = 0; i < sahip[0].FirmaBilgileridb.PersonelBilgileridb.Count; i++)
+                            {
+
+                                <div id="personel" class="col-lg-7 col-lg-pull-2 col-md-6 col-md-offset-4 col-xs-12">
+                                    <div class="panel panel-default credit-card-box">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title"><span class="panel-title-text">Persel Bilgileri-@(i+1)</span></h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label" for="cardExpiry">T.C. Kimlik No:</label>
+                                                        <input class="form-control" placeholder="Tc Numaranız" autocomplete="off" value=@sahip[0].FirmaBilgileridb.PersonelBilgileridb.ElementAt(i).TcNo required type="text" id="TcNo" onblur="tckontrol(this);" name="personel@(i+1)" maxlength="11" pattern=".{11,}" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label" for="cardExpiry">Adı Soyadı:</label>
+                                                        @Html.TextBox("personel" + (i + 1), sahip[0].FirmaBilgileridb.PersonelBilgileridb.ElementAt(i).AdıSoyadı, new { @class = "form-control", required = "required", placeholder = "Ad Soyad" ,autocomplete = "off",id = "AdSoyad" ,name = "personel"+(i+1) })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label" for="cardExpiry">Sertifika No:</label>
+                                                        @Html.TextBox("personel" + (i + 1), sahip[0].FirmaBilgileridb.PersonelBilgileridb.ElementAt(i).SertifikaNo, new { @class = "form-control", required = "required", placeholder = "Sertifika Numarası", autocomplete = "off", id = "SertifikaNo", name = "personel" + (i + 1) })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label" for="cardExpiry">Sertifika Tarihi:</label>
+                                                        <input class="form-control" required value=@sahip[0].FirmaBilgileridb.PersonelBilgileridb.ElementAt(i).SertifikaTarihi max= @DateTime.Now.ToString("yyyy-MM-dd") type="date" autocomplete="off"  id="SertifikaTarih" name="personel@(i+1)"/>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label" for="cardExpiry">Sertifika Türü:</label>
+                                                        @Html.TextBox("personel" + (i + 1), sahip[0].FirmaBilgileridb.PersonelBilgileridb.ElementAt(i).SertifikaTürü, new { @class = "form-control", required = "required", placeholder = "Sertifika Türü", autocomplete = "off", id = "SertifikaTürü", name = "personel" +(i + 1) })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label" for="cardExpiry">Sertifika Dosyası:</label>
+                                                        <a href="data:application/pdf;base64, @System.Convert.ToBase64String((Byte[])sahip[0].FirmaBilgileridb.PersonelBilgileridb.ElementAt(i).SertifikaDosyası)" class="btn btn-primary" type="application/pdf" target="_blank">Görüntüle</a>
+                                                        <input type="file" name="PersonelFile@(i+1)"  accept=".pdf" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+  
+
+
+        <div class="col-lg-7 col-lg-pull-2 col-md-6 col-md-offset-4 col-xs-12">
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="panel-title-text">Firma Dosyaları</span></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Türkiye Ticaret Sicil Gazetesi Örneği:</label>
+                                <a href="data:application/pdf;base64, @System.Convert.ToBase64String((Byte[])sahip[0].FirmaBilgileridb.FirmaDosyalarıdb.First().TürkiyeTicaretSicilGazetesiOrnegi)" class="btn btn-primary" type="application/pdf" target="_blank">Görüntüle</a>
+                                <input type="file" name="ttsgo" accept=".pdf" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Vergi Levhası Örneği:</label>
+                                <a href="data:application/pdf;base64, @System.Convert.ToBase64String((Byte[])sahip[0].FirmaBilgileridb.FirmaDosyalarıdb.First().VergiLevhasıOrnegi)" class="btn btn-primary col-md-push-1" type="application/pdf" target="_blank">Görüntüle</a>
+                                <input id="input" name="vlo" accept=".pdf" title="Lütfen Vergi Levhası Örneği dosyanızı yükleyin" type="file">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">İmza Sirküleri Örneği:</label>
+                                <a href="data:application/pdf;base64, @System.Convert.ToBase64String((Byte[])sahip[0].FirmaBilgileridb.FirmaDosyalarıdb.First().İmzaSirküleriOrnegi)" class="btn btn-primary" type="application/pdf" target="_blank">Görüntüle</a>
+                                <input type="file"  name="iso" accept=".pdf"/>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+            <div class="col-lg-7 col-lg-pull-2 col-md-6 col-md-offset-4 col-xs-12">
+                <div class="panel panel-default credit-card-box">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><span class="panel-title-text">1.	İş Yeri Açma ve Çalıştırma Ruhsatı</span></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="cardExpiry">İşyeri Ruhsat Tarihi:</label>
+                                    <input class="form-control" type="date" name="irt" value=@sahip[0].FirmaBilgileridb.FirmaDosyalarıdb.First().İşyeriRuhsatTarihi required />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="cardExpiry">Çalışma Alanı:</label>
+
+                                    <div class="input-group">
+                                        @Html.TextBox("ÇalışmaAlanı", sahip[0].FirmaBilgileridb.FirmaDosyalarıdb.First().ÇalışmaAlanı, new { @class = "form-control",type="number",min="1", required = "required",name= "ÇalışmaAlanı" })
+                                        <span class="input-group-addon">M<sup>2</sup></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="cardExpiry">İşyeri Ruhsat No:</label>
+                                    @Html.TextBox("irn", sahip[0].FirmaBilgileridb.FirmaDosyalarıdb.First().İşyeriRuhsatNo, new { @class = "form-control",type="number",name="irn", required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="cardExpiry">Deneme Odası:</label>
+                                    <div class="input-group">
+                                        @Html.TextBox("DenemeOdası", sahip[0].FirmaBilgileridb.FirmaDosyalarıdb.First().DenemeOdası, new { @class = "form-control",Type="number",name="DenemeOdası", required = "required" })
+                                        <span class="input-group-addon">M<sup>2</sup></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">İş Yeri Açma ve Çalıştırma Ruhsatı:</label>
+                                    <a href="data:application/pdf;base64, @System.Convert.ToBase64String((Byte[])sahip[0].FirmaBilgileridb.FirmaDosyalarıdb.First().İşYeriAçmaveÇalıştırmaRuhsatı)" class="btn btn-primary" type="application/pdf" target="_blank">Görüntüle</a>
+                                    <input type="file"  name="iyçr" accept=".pdf" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label " for="appendedtext">İşyeri Ruhsatı (Bir) yıl Süreli Mi?:</label>
+                                    @if (sahip[0].FirmaBilgileridb.FirmaDosyalarıdb.First().işyeriaçma == "Evet")
+                                    {
+                                    <input type="checkbox" checked="checked" id="slideTwo" class="checkbox" style="width:25px;height:25px;" name="check" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox"  id="slideTwo" class="checkbox" style="width:25px;height:25px;" name="check" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 col-lg-pull-2 col-md-6 col-md-offset-4 col-xs-12">
+                <div class="panel panel-default credit-card-box">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-push-2">
+                                <button type="submit" id="kabul" value="Kabul" name="Tamam" class="btn btn-success btn-block">Güncelle</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    }
+</form>

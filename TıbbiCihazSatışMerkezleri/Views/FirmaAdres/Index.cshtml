@@ -1,0 +1,170 @@
+﻿@model TıbbiCihazSatışMerkezleri.Models.iller
+@{ 
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-9" />
+<script>
+        $(function() {
+            $("#ContID").change(function () {//İl seçildiğinde jquery change fonksiyonu ile işlemi yakaladık.
+                var param = { id: $(this).val() };//il id'sini $(this).val() diyerek aldık değişkene attık attık.
+                $.getJSON("/FirmaAdres/Getİlce/", param, function (data) {//Controller içine yeni eklediğimiz Json metoduna gönderdik id'mizi ve dönen sonuçları döngüye sokarak dropdown listemize ekledik.
+                    $("#ilceler").html("");//Her seferinde dropdown listemizin içini boşaltmamız gerekir yoksa bütün ilçeler tek dropdown'da birleşir.Örn. İstanbul seçtiniz ilçeleri doldurdu sonra Ankara seçtinizi Ankaranın ilçelerinide istanbulla birlikte yazar.
+                    $("#ilceler").append($('<option/>', {//Default olarak Seçiniz ekledik.
+                        value: "0",
+                        text: "Seçiniz"
+                    }));
+                    if (data != 0) {//Dönen değer 0 değilse dropdown listemizi veri tabanından gelenler ile doldurduk.
+                        $("#ilceler").html("");
+                        $.each(data, function (i, item) {//Burda JQuery each döngüsü ile dönen değerleri dropdown listemize doldurduk.
+                            $("#ilceler").append($('<option/>', {
+                                value: item.Value,//Controller kısmında dinamik olarak verdiğimiz isimleri yazıyoruz buraya item.Value ve item.Text bunlar controllerden gelen değerleri dropdown listemize dolduruyor.
+                                text: item.Text
+
+                            }));
+                        });
+                    }
+
+                });
+            });
+        
+        });
+        jQuery(function ($) {
+            $("#tel").mask("(999) 999-9999");
+            $("#tel2").mask("(999) 999-9999");
+            $("#fax").mask("(999) 999-9999");
+            var val = 'İSTANBUL';
+            $('#ContID option:contains(' + val + ')').prop({ selected: true });
+        });
+        function checkURL(url) {
+            var string = url.value;
+            if (!~string.indexOf("http")) {
+                string = "http://" + string;
+            }
+            url.value = string;
+            return url
+        }
+
+</script>
+<h4 class="alert alert-success">Firma Adres Ve İletişim Bilgileri</h4>
+   <form action="/FirmaAdres/Index" method="post" >
+        <div class="col-lg-6 col-lg-pull-2 col-md-6 col-md-offset-4 col-xs-12">
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="panel-title-text">Firma Adres Ve İletişim Bilgileri</span></h3>
+                </div>
+                <div class="panel-body" style="background-color:#e9ece5">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">İl: </label>
+                                @Html.DropDownListFor(a => a.sehirid,ViewBag.illist as SelectList, "Seçiniz", new {@class = "form-control", id = "ContID", value = "3" ,Name="il",required="required"})
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardCVC">İlçe: </label>
+                                <select id="ilceler" name="ilce" class="form-control"   required></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Posta Kodu:</label>
+                                <input class="form-control" placeholder="Posta Kodu" type="text" min="1" name="PostaNo" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Fax No:</label>
+                                <input class="form-control" placeholder="Fax Numaranız" id="fax" type="text" name="FaxNo" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Telefon No:</label>
+                                <input class="form-control" placeholder="Telefon Numaranız" type="text" id="tel" name="TelNo" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Telefon No2: </label>
+                                <input class="form-control" type="text" placeholder="Telefon Numaranız" id="tel2" name="TelNo2" required />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Web Sitesi Adı:</label>
+                                <input class="form-control" placeholder="Web Siteniz" type="url" onblur="checkURL(this);" name="WebSite" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Firma E-Postası:</label>
+                                <input class="form-control" placeholder="E-Posta Adresiniz" type="email" name="Eposta" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Vergi Dairesi:</label>
+                                <input class="form-control" placeholder="Vergi Daireniz" type="text" name="VergiDaire" required />
+                            </div>
+                        </div>
+              
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="cardExpiry">Mahalle:</label>
+                                    <input class="form-control" placeholder="Mahalleniz" type="text" name="Mahalle" required />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="cardExpiry">Cadde:</label>
+                                    <input class="form-control" placeholder="Cadde" type="text" name="Cadde" required />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="cardExpiry">Sokak:</label>
+                                    <input class="form-control" placeholder="Sokak" type="text" name="Sokak" required />
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                     <div class="row">
+                         <div class="col-md-6">
+                             <div class="form-group">
+                                 <label class="control-label"  for="cardExpiry">Dış Kapı No:</label>
+                                 <input class="form-control" placeholder="Dış Kapı Numaranız" type="number" min="1" name="DışNo" required />
+                             </div>
+                         </div>
+                         <div class="col-md-6">
+                             <div class="form-group">
+                                 <label class="control-label" for="cardExpiry">İç kapı No:</label>
+                                 <input class="form-control" placeholder="İç Kapı Numaranız" type="number" min="1" name="İçNo" required />
+                             </div>
+                         </div>
+                     </div>
+                    <br />
+                    <div class="col-md-12">
+                        <button class="btn btn-primary btn-block" type="submit">Devam Et</button>
+                    </div>
+                  </div>
+             </div>  
+          </div>
+</form>

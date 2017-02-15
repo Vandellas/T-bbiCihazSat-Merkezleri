@@ -1,0 +1,110 @@
+﻿@{
+    ViewBag.Title = "Index"; 
+    Layout = "~/Views/Shared/_Layout.cshtml";
+ 
+}
+<head>
+    <script src="~/scripts/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="~/scripts/jquery-1.12.4.js"></script>
+    <script src="~/scripts/jquery-ui.js"></script>
+</head>
+<form id="form" action="/Home/Index" class="form-horizontal" method="post">
+    @if (TempData["SorguDurumu"] != null)
+    {
+        <p  class="alert alert-danger"><b class="control-label">@TempData["SorguDurumu"]</b></p>
+
+
+    }
+    @if (TempData["CaptchaDurumu"] != null)
+    {
+        <p class="alert alert-danger"><b class="control-label">@TempData["CaptchaDurumu"]</b></p>
+    }
+
+    <fieldset>
+
+        <!-- Form Name -->
+        <h4 class="alert alert-success">Firma Genel Bilgileri</h4>
+
+        <!-- Appended Input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="appendedtext">Vergi Numarası:</label>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <input id="vergiNO" name="vergiNO" value=@ViewBag.vergiNo type="text" placeholder="Vergi Numaranızı Giriniz" pattern="(.){10,10}" onkeypress='return event.charCode >= 48 && event.charCode <= 57' title="Lütfen 10 Haneli Veri Numaranızı Giriniz" maxlength="10" class="form-control" required/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-info" type="submit">Sorgula</button>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+@if (ViewBag.getDb == 0)
+{
+     
+        <!-- Textarea -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="textarea">Firma Genel Müdürlük Adresi:</label>
+            <div class="col-md-4">
+                <textarea class="form-control" id="Adres" name="Adres" readonly>@ViewBag.adres</textarea>
+            </div>
+        </div>
+        <!-- Textarea -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="textarea">Firma Adı:</label>
+            <div class="col-md-4">
+                <textarea class="form-control" id="FirmaAdı" name="FirmaAdı" readonly>@ViewBag.FirmaAdi</textarea>
+            </div>
+         </div>
+        <!-- Textarea -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="textarea">VergiDairesi:</label>
+            <div class="col-md-4">
+                <textarea class="form-control"  id="VergiDairesi"  name="VergiDairesi" readonly>@ViewBag.vergiDairesi</textarea>
+            </div>
+        </div>
+}
+        <!-- Multiple Radios -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="radios">Firma Yapısı:</label>
+            <div class="col-md-4">
+                <div class="radio">
+                    <label for="radios-0">
+                        <input type="radio" name="type" id="merkez" value="0"  @ViewBag.check>
+                        Merkez
+                    </label>
+                </div>
+                <div class="radio">
+                    <label for="radios-1">
+                        <input type="radio" name="type" id="Şube" value="1" @ViewBag.checksube>
+                        Şube
+                    </label>
+                </div>
+            </div>
+        </div>
+        <!-- Capche -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="singlebutton"></label>
+            <div class="col-md-4">
+                <div class="g-recaptcha" data-sitekey="6LdKehIUAAAAAPp96b0s7U9VWGY9z_LqRrGO_NHH"></div>
+            </div>
+        </div>
+@if (ViewBag.visibility == 0)
+{
+        <!-- Button -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="singlebutton"></label>
+            <div class="col-md-4">
+                <a href="/FirmaAdres/Index" name="NextPage" class="btn btn-primary btn-block btn">Devam Et</a>
+            </div>
+        </div>
+}
+    </fieldset>
+</form>
+
+
+
+
+    
+
+

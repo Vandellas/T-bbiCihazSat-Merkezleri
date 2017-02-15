@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="734fad3d59b144b9ae7dd4c96039a0cc" Name="Diagram1" ZoomLevel="76">
+        <EntityTypeShape EntityType="YeterlilikdbModel.FirmaBilgileridb" Width="1.5" PointX="0.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="YeterlilikdbModel.ilceler" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="YeterlilikdbModel.iller" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="YeterlilikdbModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="YeterlilikdbModel.Vergi" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="YeterlilikdbModel.FirmaDosyalarıdb" Width="1.5" PointX="3" PointY="11.25" />
+        <AssociationConnector Association="YeterlilikdbModel.FK_FirmaDosyaları_FirmaBilgileri" />
+        <EntityTypeShape EntityType="YeterlilikdbModel.MesulMüdürüdb" Width="1.5" PointX="3" PointY="15.625" />
+        <AssociationConnector Association="YeterlilikdbModel.FK_MesulMüdürü_FirmaBilgileri" />
+        <EntityTypeShape EntityType="YeterlilikdbModel.FirmaSahibidb" Width="1.5" PointX="3" PointY="3.875" />
+        <AssociationConnector Association="YeterlilikdbModel.FK_FirmaSahibi_FirmaBilgileri" />
+        <EntityTypeShape EntityType="YeterlilikdbModel.YetkiliBilgileri" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="YeterlilikdbModel.FirmaDurum" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="YeterlilikdbModel.FK_FirmaDurum_FirmaBilgileridb" />
+        <EntityTypeShape EntityType="YeterlilikdbModel.PersonelBilgileridb" Width="1.5" PointX="2.75" PointY="7.25" />
+        <AssociationConnector Association="YeterlilikdbModel.FK_PersonelBilgileri_FirmaBilgileri" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="~/scripts/jquery-1.12.4.js"></script>
+<script src="~/scripts/jquery-ui.js"></script>        
+<h4 class="alert alert-success">V.	Taahhütname</h4>
+<form action="/Taahhütname/Index" method="post">
+    @if (TempData["Success"] != null)
+    {
+        <p class="alert alert-success" id="successMessage" title="Kayıt Sonucu"><strong>@TempData["Success"]</strong></p>
+        <script>
+            $("#successMessage").dialog();
+        </script>
+
+    }
+    <fieldset style="border:1px solid black;">
+        <p class="form-control"><center><b>T.C.</b></center></p>
+        <p><center><b>İSTANBUL VALİLİĞİ</b></center></p>
+        <p><center><b>İL SAĞLIK MÜDÜRLÜĞÜ’NE</b></center></p>
+        <p style="text-indent:35px;line-height: 19px; "><b>15/05/2014 tarihli ve 29001 sayılı Resmî Gazete’de yayımlanan Tıbbi Cihaz Satış, Reklam ve Tanıtım Yönetmeliği uyarınca tıbbi cihaz satış merkezimde satış ve tanıtımını gerçekleştireceğim tüm tıbbi cihazların Türkiye İlaç ve Tıbbi Cihaz Ulusal Bilgi Bankası (TİTUBB) kayıt işlemlerinin yapılacağını taahhüt ederim.</b></p>
+        <br />
+        <br />
+        <div class="col-md-5 col-s-5 col-xs-5 col-lg-5 col-md-push-5   col-sm-push-5">
+            <label class="control-label">
+                <input id="checkkabul" style="width:25px; height:25px; vertical-align:middle " name="checkkabul" required type="checkbox"> Kabul Ediyorum
+            </label>
+        </div>
+    </fieldset>
+    <br /><br />
+    
+        <div class="col-md-6 col-sm-push-3">
+            <button type="submit" name="kaydet" value="0" class="btn btn-primary btn-block">Kaydet</button>
+        </div>
+
+   
+</form>

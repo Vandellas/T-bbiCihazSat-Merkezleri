@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "YetkiVer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/Site.css" rel="stylesheet" />
+@if (TempData["YetkiKontrol"]!=null)
+{
+    <p class="alert alert-info">@TempData["YetkiKontrol"]</p>
+}
+<div class="wrapper">
+    <form method="post" action="/YetkiliGiris/YetkiVer" class="form-signin">
+        <h2 class="form-signin-heading">Yetki Ver</h2>
+        <input type="text" class="form-control" name="KullanıcıAdı" placeholder="Kullanıcı Adınız" required="" autofocus="" />
+        <input type="password" class="form-control" name="Sifre" placeholder="Şifreniz" required="" />
+        <br />
+        <button class="btn btn-lg btn-info btn-block" type="submit">Kaydet</button>
+    </form>
+</div>

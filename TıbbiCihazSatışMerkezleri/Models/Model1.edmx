@@ -1,0 +1,652 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="YeterlilikdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FirmaBilgileridb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="il" Type="nvarchar" MaxLength="50" />
+          <Property Name="ilce" Type="nvarchar" MaxLength="50" />
+          <Property Name="TelNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="TelNo2" Type="nvarchar" MaxLength="50" />
+          <Property Name="FaxNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="WebSite" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirmaEposta" Type="nvarchar" MaxLength="50" />
+          <Property Name="VergiDairesi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Mahalle" Type="nvarchar" MaxLength="50" />
+          <Property Name="Cadde" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sokak" Type="nvarchar" MaxLength="50" />
+          <Property Name="DışKapıNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="İçKapıNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="VergiNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirmaAdı" Type="nvarchar" MaxLength="50" />
+          <Property Name="PostaKodu" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="FirmaDosyalarıdb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Firmaid" Type="int" />
+          <Property Name="TürkiyeTicaretSicilGazetesiOrnegi" Type="varbinary(max)" />
+          <Property Name="VergiLevhasıOrnegi" Type="varbinary(max)" />
+          <Property Name="İmzaSirküleriOrnegi" Type="varbinary(max)" />
+          <Property Name="İşYeriAçmaveÇalıştırmaRuhsatı" Type="varbinary(max)" />
+          <Property Name="İşyeriRuhsatTarihi" Type="nvarchar" MaxLength="50" />
+          <Property Name="İşyeriRuhsatNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="ÇalışmaAlanı" Type="nvarchar" MaxLength="50" />
+          <Property Name="DenemeOdası" Type="nvarchar" MaxLength="50" />
+          <Property Name="işyeriaçma" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="FirmaDurum">
+          <Key>
+            <PropertyRef Name="Kontrolid" />
+          </Key>
+          <Property Name="Kontrolid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Firmaid" Type="int" />
+          <Property Name="Durum" Type="int" />
+          <Property Name="RedSebebi" Type="nvarchar" MaxLength="50" />
+          <Property Name="YapanKişi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tarih" Type="date" />
+        </EntityType>
+        <EntityType Name="FirmaSahibidb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Firmaid" Type="int" />
+          <Property Name="TcNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="AdıSoyadı" Type="nvarchar" MaxLength="50" />
+          <Property Name="HizmetSözleşmesi" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="ilceler">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="ilce" Type="nvarchar" MaxLength="255" />
+          <Property Name="sehir" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="iller">
+          <Key>
+            <PropertyRef Name="sehirid" />
+          </Key>
+          <Property Name="sehirid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sehir" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="MesulMüdürüdb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TcNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Firmaid" Type="int" />
+          <Property Name="AdıSoyadı" Type="nvarchar" MaxLength="50" />
+          <Property Name="SertifikaNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="SertfikaTarihi" Type="nvarchar" MaxLength="50" />
+          <Property Name="SertifikaDosyası" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="PersonelBilgileridb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Firmaid" Type="int" />
+          <Property Name="AdıSoyadı" Type="nvarchar" MaxLength="50" />
+          <Property Name="TcNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="SertifikaTürü" Type="nvarchar" MaxLength="50" />
+          <Property Name="SertifikaTarihi" Type="nvarchar" MaxLength="50" />
+          <Property Name="SertifikaDosyası" Type="varbinary(max)" />
+          <Property Name="SertifikaNo" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Vergi">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VergiNumarası" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirmaAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirmaGenelMüdürlükAdresi" Type="nvarchar" MaxLength="50" />
+          <Property Name="VergiDairesi" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="YetkiliBilgileri">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KullanıcıAdı" Type="nvarchar" MaxLength="50" />
+          <Property Name="Şifre" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_FirmaDosyaları_FirmaBilgileri">
+          <End Role="FirmaBilgileridb" Type="Self.FirmaBilgileridb" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="FirmaDosyalarıdb" Type="Self.FirmaDosyalarıdb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmaBilgileridb">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FirmaDosyalarıdb">
+              <PropertyRef Name="Firmaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FirmaDurum_FirmaBilgileridb">
+          <End Role="FirmaBilgileridb" Type="Self.FirmaBilgileridb" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="FirmaDurum" Type="Self.FirmaDurum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmaBilgileridb">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FirmaDurum">
+              <PropertyRef Name="Firmaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FirmaSahibi_FirmaBilgileri">
+          <End Role="FirmaBilgileridb" Type="Self.FirmaBilgileridb" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="FirmaSahibidb" Type="Self.FirmaSahibidb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmaBilgileridb">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FirmaSahibidb">
+              <PropertyRef Name="Firmaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MesulMüdürü_FirmaBilgileri">
+          <End Role="FirmaBilgileridb" Type="Self.FirmaBilgileridb" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MesulMüdürüdb" Type="Self.MesulMüdürüdb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmaBilgileridb">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MesulMüdürüdb">
+              <PropertyRef Name="Firmaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonelBilgileri_FirmaBilgileri">
+          <End Role="FirmaBilgileridb" Type="Self.FirmaBilgileridb" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonelBilgileridb" Type="Self.PersonelBilgileridb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmaBilgileridb">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PersonelBilgileridb">
+              <PropertyRef Name="Firmaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="YeterlilikdbModelStoreContainer">
+          <EntitySet Name="FirmaBilgileridb" EntityType="Self.FirmaBilgileridb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FirmaDosyalarıdb" EntityType="Self.FirmaDosyalarıdb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FirmaDurum" EntityType="Self.FirmaDurum" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FirmaSahibidb" EntityType="Self.FirmaSahibidb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ilceler" EntityType="Self.ilceler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="iller" EntityType="Self.iller" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MesulMüdürüdb" EntityType="Self.MesulMüdürüdb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonelBilgileridb" EntityType="Self.PersonelBilgileridb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vergi" EntityType="Self.Vergi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YetkiliBilgileri" EntityType="Self.YetkiliBilgileri" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FirmaDosyaları_FirmaBilgileri" Association="Self.FK_FirmaDosyaları_FirmaBilgileri">
+            <End Role="FirmaBilgileridb" EntitySet="FirmaBilgileridb" />
+            <End Role="FirmaDosyalarıdb" EntitySet="FirmaDosyalarıdb" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FirmaDurum_FirmaBilgileridb" Association="Self.FK_FirmaDurum_FirmaBilgileridb">
+            <End Role="FirmaBilgileridb" EntitySet="FirmaBilgileridb" />
+            <End Role="FirmaDurum" EntitySet="FirmaDurum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FirmaSahibi_FirmaBilgileri" Association="Self.FK_FirmaSahibi_FirmaBilgileri">
+            <End Role="FirmaBilgileridb" EntitySet="FirmaBilgileridb" />
+            <End Role="FirmaSahibidb" EntitySet="FirmaSahibidb" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MesulMüdürü_FirmaBilgileri" Association="Self.FK_MesulMüdürü_FirmaBilgileri">
+            <End Role="FirmaBilgileridb" EntitySet="FirmaBilgileridb" />
+            <End Role="MesulMüdürüdb" EntitySet="MesulMüdürüdb" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonelBilgileri_FirmaBilgileri" Association="Self.FK_PersonelBilgileri_FirmaBilgileri">
+            <End Role="FirmaBilgileridb" EntitySet="FirmaBilgileridb" />
+            <End Role="PersonelBilgileridb" EntitySet="PersonelBilgileridb" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="YeterlilikdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="FirmaBilgileridb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="il" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ilce" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TelNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TelNo2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FaxNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WebSite" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirmaEposta" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VergiDairesi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mahalle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Cadde" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sokak" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DışKapıNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="İçKapıNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VergiNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FirmaDosyalarıdb" Relationship="YeterlilikdbModel.FK_FirmaDosyaları_FirmaBilgileri" FromRole="FirmaBilgileridb" ToRole="FirmaDosyalarıdb" />
+          <NavigationProperty Name="MesulMüdürüdb" Relationship="YeterlilikdbModel.FK_MesulMüdürü_FirmaBilgileri" FromRole="FirmaBilgileridb" ToRole="MesulMüdürüdb" />
+          <NavigationProperty Name="FirmaSahibidb" Relationship="YeterlilikdbModel.FK_FirmaSahibi_FirmaBilgileri" FromRole="FirmaBilgileridb" ToRole="FirmaSahibidb" />
+          <Property Name="FirmaAdı" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostaKodu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FirmaDurum" Relationship="YeterlilikdbModel.FK_FirmaDurum_FirmaBilgileridb" FromRole="FirmaBilgileridb" ToRole="FirmaDurum" />
+          <NavigationProperty Name="PersonelBilgileridb" Relationship="YeterlilikdbModel.FK_PersonelBilgileri_FirmaBilgileri" FromRole="FirmaBilgileridb" ToRole="PersonelBilgileridb" />
+        </EntityType>
+        <EntityType Name="ilceler">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="ilce" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sehir" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="iller">
+          <Key>
+            <PropertyRef Name="sehirid" />
+          </Key>
+          <Property Name="sehirid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sehir" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Vergi">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VergiNumarası" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirmaAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirmaGenelMüdürlükAdresi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VergiDairesi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="ContextEntitiess" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FirmaBilgileridb" EntityType="Self.FirmaBilgileridb" />
+          <EntitySet Name="ilceler" EntityType="Self.ilceler" />
+          <EntitySet Name="iller" EntityType="Self.iller" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Vergi" EntityType="Self.Vergi" />
+          <EntitySet Name="FirmaDosyalarıdb" EntityType="YeterlilikdbModel.FirmaDosyalarıdb" />
+          <AssociationSet Name="FK_FirmaDosyaları_FirmaBilgileri" Association="YeterlilikdbModel.FK_FirmaDosyaları_FirmaBilgileri">
+            <End Role="FirmaBilgileridb" EntitySet="FirmaBilgileridb" />
+            <End Role="FirmaDosyalarıdb" EntitySet="FirmaDosyalarıdb" />
+          </AssociationSet>
+          <EntitySet Name="MesulMüdürüdb" EntityType="YeterlilikdbModel.MesulMüdürüdb" />
+          <AssociationSet Name="FK_MesulMüdürü_FirmaBilgileri" Association="YeterlilikdbModel.FK_MesulMüdürü_FirmaBilgileri">
+            <End Role="FirmaBilgileridb" EntitySet="FirmaBilgileridb" />
+            <End Role="MesulMüdürüdb" EntitySet="MesulMüdürüdb" />
+          </AssociationSet>
+          <EntitySet Name="FirmaSahibidb" EntityType="YeterlilikdbModel.FirmaSahibidb" />
+          <AssociationSet Name="FK_FirmaSahibi_FirmaBilgileri" Association="YeterlilikdbModel.FK_FirmaSahibi_FirmaBilgileri">
+            <End Role="FirmaBilgileridb" EntitySet="FirmaBilgileridb" />
+            <End Role="FirmaSahibidb" EntitySet="FirmaSahibidb" />
+          </AssociationSet>
+          <EntitySet Name="YetkiliBilgileri" EntityType="YeterlilikdbModel.YetkiliBilgileri" />
+          <EntitySet Name="FirmaDurum" EntityType="YeterlilikdbModel.FirmaDurum" />
+          <AssociationSet Name="FK_FirmaDurum_FirmaBilgileridb" Association="YeterlilikdbModel.FK_FirmaDurum_FirmaBilgileridb">
+            <End Role="FirmaBilgileridb" EntitySet="FirmaBilgileridb" />
+            <End Role="FirmaDurum" EntitySet="FirmaDurum" />
+          </AssociationSet>
+          <EntitySet Name="PersonelBilgileridb" EntityType="YeterlilikdbModel.PersonelBilgileridb" />
+          <AssociationSet Name="FK_PersonelBilgileri_FirmaBilgileri" Association="YeterlilikdbModel.FK_PersonelBilgileri_FirmaBilgileri">
+            <End Role="FirmaBilgileridb" EntitySet="FirmaBilgileridb" />
+            <End Role="PersonelBilgileridb" EntitySet="PersonelBilgileridb" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="FirmaDosyalarıdb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Firmaid" Type="Int32" />
+          <Property Name="TürkiyeTicaretSicilGazetesiOrnegi" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="VergiLevhasıOrnegi" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="İmzaSirküleriOrnegi" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="İşYeriAçmaveÇalıştırmaRuhsatı" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="İşyeriRuhsatTarihi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="İşyeriRuhsatNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ÇalışmaAlanı" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DenemeOdası" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="işyeriaçma" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FirmaBilgileridb" Relationship="YeterlilikdbModel.FK_FirmaDosyaları_FirmaBilgileri" FromRole="FirmaDosyalarıdb" ToRole="FirmaBilgileridb" />
+        </EntityType>
+        <Association Name="FK_FirmaDosyaları_FirmaBilgileri">
+          <End Type="YeterlilikdbModel.FirmaBilgileridb" Role="FirmaBilgileridb" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="YeterlilikdbModel.FirmaDosyalarıdb" Role="FirmaDosyalarıdb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmaBilgileridb">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FirmaDosyalarıdb">
+              <PropertyRef Name="Firmaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MesulMüdürüdb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TcNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Firmaid" Type="Int32" />
+          <Property Name="AdıSoyadı" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SertifikaNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SertfikaTarihi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SertifikaDosyası" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="FirmaBilgileridb" Relationship="YeterlilikdbModel.FK_MesulMüdürü_FirmaBilgileri" FromRole="MesulMüdürüdb" ToRole="FirmaBilgileridb" />
+        </EntityType>
+        <Association Name="FK_MesulMüdürü_FirmaBilgileri">
+          <End Type="YeterlilikdbModel.FirmaBilgileridb" Role="FirmaBilgileridb" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="YeterlilikdbModel.MesulMüdürüdb" Role="MesulMüdürüdb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmaBilgileridb">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MesulMüdürüdb">
+              <PropertyRef Name="Firmaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FirmaSahibidb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Firmaid" Type="Int32" />
+          <Property Name="TcNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AdıSoyadı" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HizmetSözleşmesi" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="FirmaBilgileridb" Relationship="YeterlilikdbModel.FK_FirmaSahibi_FirmaBilgileri" FromRole="FirmaSahibidb" ToRole="FirmaBilgileridb" />
+        </EntityType>
+        <Association Name="FK_FirmaSahibi_FirmaBilgileri">
+          <End Type="YeterlilikdbModel.FirmaBilgileridb" Role="FirmaBilgileridb" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="YeterlilikdbModel.FirmaSahibidb" Role="FirmaSahibidb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmaBilgileridb">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FirmaSahibidb">
+              <PropertyRef Name="Firmaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="YetkiliBilgileri">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KullanıcıAdı" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Şifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="FirmaDurum">
+          <Key>
+            <PropertyRef Name="Kontrolid" />
+          </Key>
+          <Property Name="Kontrolid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Firmaid" Type="Int32" />
+          <Property Name="Durum" Type="Int32" />
+          <Property Name="RedSebebi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="YapanKişi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tarih" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="FirmaBilgileridb" Relationship="YeterlilikdbModel.FK_FirmaDurum_FirmaBilgileridb" FromRole="FirmaDurum" ToRole="FirmaBilgileridb" />
+        </EntityType>
+        <Association Name="FK_FirmaDurum_FirmaBilgileridb">
+          <End Type="YeterlilikdbModel.FirmaBilgileridb" Role="FirmaBilgileridb" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="YeterlilikdbModel.FirmaDurum" Role="FirmaDurum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmaBilgileridb">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FirmaDurum">
+              <PropertyRef Name="Firmaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PersonelBilgileridb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Firmaid" Type="Int32" />
+          <Property Name="AdıSoyadı" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TcNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SertifikaTürü" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SertifikaTarihi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SertifikaDosyası" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="SertifikaNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FirmaBilgileridb" Relationship="YeterlilikdbModel.FK_PersonelBilgileri_FirmaBilgileri" FromRole="PersonelBilgileridb" ToRole="FirmaBilgileridb" />
+        </EntityType>
+        <Association Name="FK_PersonelBilgileri_FirmaBilgileri">
+          <End Type="YeterlilikdbModel.FirmaBilgileridb" Role="FirmaBilgileridb" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="YeterlilikdbModel.PersonelBilgileridb" Role="PersonelBilgileridb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmaBilgileridb">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PersonelBilgileridb">
+              <PropertyRef Name="Firmaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="YeterlilikdbModelStoreContainer" CdmEntityContainer="ContextEntitiess">
+          <EntitySetMapping Name="FirmaBilgileridb">
+            <EntityTypeMapping TypeName="YeterlilikdbModel.FirmaBilgileridb">
+              <MappingFragment StoreEntitySet="FirmaBilgileridb">
+                <ScalarProperty Name="PostaKodu" ColumnName="PostaKodu" />
+                <ScalarProperty Name="FirmaAdı" ColumnName="FirmaAdı" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="il" ColumnName="il" />
+                <ScalarProperty Name="ilce" ColumnName="ilce" />
+                <ScalarProperty Name="TelNo" ColumnName="TelNo" />
+                <ScalarProperty Name="TelNo2" ColumnName="TelNo2" />
+                <ScalarProperty Name="FaxNo" ColumnName="FaxNo" />
+                <ScalarProperty Name="WebSite" ColumnName="WebSite" />
+                <ScalarProperty Name="FirmaEposta" ColumnName="FirmaEposta" />
+                <ScalarProperty Name="VergiDairesi" ColumnName="VergiDairesi" />
+                <ScalarProperty Name="Mahalle" ColumnName="Mahalle" />
+                <ScalarProperty Name="Cadde" ColumnName="Cadde" />
+                <ScalarProperty Name="Sokak" ColumnName="Sokak" />
+                <ScalarProperty Name="DışKapıNo" ColumnName="DışKapıNo" />
+                <ScalarProperty Name="İçKapıNo" ColumnName="İçKapıNo" />
+                <ScalarProperty Name="VergiNo" ColumnName="VergiNo" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ilceler">
+            <EntityTypeMapping TypeName="YeterlilikdbModel.ilceler">
+              <MappingFragment StoreEntitySet="ilceler">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ilce" ColumnName="ilce" />
+                <ScalarProperty Name="sehir" ColumnName="sehir" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="iller">
+            <EntityTypeMapping TypeName="YeterlilikdbModel.iller">
+              <MappingFragment StoreEntitySet="iller">
+                <ScalarProperty Name="sehirid" ColumnName="sehirid" />
+                <ScalarProperty Name="sehir" ColumnName="sehir" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="YeterlilikdbModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vergi">
+            <EntityTypeMapping TypeName="YeterlilikdbModel.Vergi">
+              <MappingFragment StoreEntitySet="Vergi">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="VergiNumarası" ColumnName="VergiNumarası" />
+                <ScalarProperty Name="FirmaAdi" ColumnName="FirmaAdi" />
+                <ScalarProperty Name="FirmaGenelMüdürlükAdresi" ColumnName="FirmaGenelMüdürlükAdresi" />
+                <ScalarProperty Name="VergiDairesi" ColumnName="VergiDairesi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FirmaDosyalarıdb">
+            <EntityTypeMapping TypeName="YeterlilikdbModel.FirmaDosyalarıdb">
+              <MappingFragment StoreEntitySet="FirmaDosyalarıdb">
+                <ScalarProperty Name="işyeriaçma" ColumnName="işyeriaçma" />
+                <ScalarProperty Name="DenemeOdası" ColumnName="DenemeOdası" />
+                <ScalarProperty Name="ÇalışmaAlanı" ColumnName="ÇalışmaAlanı" />
+                <ScalarProperty Name="İşyeriRuhsatNo" ColumnName="İşyeriRuhsatNo" />
+                <ScalarProperty Name="İşyeriRuhsatTarihi" ColumnName="İşyeriRuhsatTarihi" />
+                <ScalarProperty Name="İşYeriAçmaveÇalıştırmaRuhsatı" ColumnName="İşYeriAçmaveÇalıştırmaRuhsatı" />
+                <ScalarProperty Name="İmzaSirküleriOrnegi" ColumnName="İmzaSirküleriOrnegi" />
+                <ScalarProperty Name="VergiLevhasıOrnegi" ColumnName="VergiLevhasıOrnegi" />
+                <ScalarProperty Name="TürkiyeTicaretSicilGazetesiOrnegi" ColumnName="TürkiyeTicaretSicilGazetesiOrnegi" />
+                <ScalarProperty Name="Firmaid" ColumnName="Firmaid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MesulMüdürüdb">
+            <EntityTypeMapping TypeName="YeterlilikdbModel.MesulMüdürüdb">
+              <MappingFragment StoreEntitySet="MesulMüdürüdb">
+                <ScalarProperty Name="SertifikaDosyası" ColumnName="SertifikaDosyası" />
+                <ScalarProperty Name="SertfikaTarihi" ColumnName="SertfikaTarihi" />
+                <ScalarProperty Name="SertifikaNo" ColumnName="SertifikaNo" />
+                <ScalarProperty Name="AdıSoyadı" ColumnName="AdıSoyadı" />
+                <ScalarProperty Name="Firmaid" ColumnName="Firmaid" />
+                <ScalarProperty Name="TcNo" ColumnName="TcNo" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FirmaSahibidb">
+            <EntityTypeMapping TypeName="YeterlilikdbModel.FirmaSahibidb">
+              <MappingFragment StoreEntitySet="FirmaSahibidb">
+                <ScalarProperty Name="HizmetSözleşmesi" ColumnName="HizmetSözleşmesi" />
+                <ScalarProperty Name="AdıSoyadı" ColumnName="AdıSoyadı" />
+                <ScalarProperty Name="TcNo" ColumnName="TcNo" />
+                <ScalarProperty Name="Firmaid" ColumnName="Firmaid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YetkiliBilgileri">
+            <EntityTypeMapping TypeName="YeterlilikdbModel.YetkiliBilgileri">
+              <MappingFragment StoreEntitySet="YetkiliBilgileri">
+                <ScalarProperty Name="Şifre" ColumnName="Şifre" />
+                <ScalarProperty Name="KullanıcıAdı" ColumnName="KullanıcıAdı" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FirmaDurum">
+            <EntityTypeMapping TypeName="YeterlilikdbModel.FirmaDurum">
+              <MappingFragment StoreEntitySet="FirmaDurum">
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="YapanKişi" ColumnName="YapanKişi" />
+                <ScalarProperty Name="RedSebebi" ColumnName="RedSebebi" />
+                <ScalarProperty Name="Durum" ColumnName="Durum" />
+                <ScalarProperty Name="Firmaid" ColumnName="Firmaid" />
+                <ScalarProperty Name="Kontrolid" ColumnName="Kontrolid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonelBilgileridb">
+            <EntityTypeMapping TypeName="YeterlilikdbModel.PersonelBilgileridb">
+              <MappingFragment StoreEntitySet="PersonelBilgileridb">
+                <ScalarProperty Name="SertifikaNo" ColumnName="SertifikaNo" />
+                <ScalarProperty Name="SertifikaDosyası" ColumnName="SertifikaDosyası" />
+                <ScalarProperty Name="SertifikaTarihi" ColumnName="SertifikaTarihi" />
+                <ScalarProperty Name="SertifikaTürü" ColumnName="SertifikaTürü" />
+                <ScalarProperty Name="TcNo" ColumnName="TcNo" />
+                <ScalarProperty Name="AdıSoyadı" ColumnName="AdıSoyadı" />
+                <ScalarProperty Name="Firmaid" ColumnName="Firmaid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

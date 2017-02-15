@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #kvFileinputModal {
+        z-index: 9999;
+    }
+</style>
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/Ktyle.css" rel="stylesheet" />
+<h4 class="alert alert-success">IV.	Firma Dosyaları</h4>
+<form action="/FirmaDosyaları/Index" method="post" enctype="multipart/form-data">
+        <div class="col-lg-7 col-lg-pull-2 col-md-6 col-md-offset-4 col-xs-12">
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="panel-title-text">Firma Dosyaları</span></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Türkiye Ticaret Sicil Gazetesi Örneği:</label>
+                                <input id="input" name="ttsgo" accept=".pdf" title="Lütfen Türkiye Ticaret Sicil Gazetesi Örneği dosyanızı yükleyin." type="file" class="file"  data-show-upload="false" data-show-caption="true" required>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Vergi Levhası Örneği:</label>
+                                <input id="input" name="vlo" accept=".pdf" title="Lütfen Vergi Levhası Örneği dosyanızı yükleyin" type="file" class="file"  data-show-upload="false" data-show-caption="true" required>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">İmza Sirküleri Örneği:</label>
+                                <input id="input" name="iso" accept=".pdf" title="Lütfen İmza Sirküleri Örneği dosyanızı yükleyin" type="file"  class="file " data-show-upload="false" data-show-caption="true"  required>
+                            </div>
+                        </div>
+                    </div>
+
+               </div>
+             </div>
+        </div>
+    <div class="col-lg-7 col-lg-pull-2 col-md-6 col-md-offset-4 col-xs-12">
+        <div class="panel panel-default credit-card-box">
+            <div class="panel-heading">
+                <h3 class="panel-title"><span class="panel-title-text">1.	İş Yeri Açma ve Çalıştırma Ruhsatı</span></h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">İşyeri Ruhsat Tarihi:</label>
+                                <input class="form-control" type="date" name="irt" max= @DateTime.Now.ToString("yyyy-MM-dd")  required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Çalışma Alanı:</label>
+                                <div class="input-group">
+                                    <input id="vergiNO" name="ÇalışmaAlanı" min="1" type="number" placeholder="Çalışma Alanı"  onkeypress='return event.charCode >= 48 && event.charCode <= 57'  class="form-control " required />
+                                     <span class="input-group-addon">M<sup>2</sup></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="cardExpiry">İşyeri Ruhsat No:</label>
+                            <input class="form-control" type="number" placeholder="İşyeri Ruhsat No:" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="irn" required />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="cardExpiry">Deneme Odası:</label>
+                            <div class="input-group">
+                                <input id="vergiNO" name="DenemeOdası" min="1" type="number" placeholder="Deneme Odası" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control " required />
+                                <span class="input-group-addon">M<sup>2</sup></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">İş Yeri Açma ve Çalıştırma Ruhsatı:</label>
+                            <input id="input-fr" name="iyavçr" type="file"  class="file " data-show-upload="false" data-show-caption="true" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label " for="appendedtext">İşyeri Ruhsatı (Bir) yıl Süreli Mi?:</label>
+                            <input type="checkbox" value="None" id="slideTwo" class="checkbox" style="width:25px;height:25px;" name="check" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+               
+                        <input type="submit" name="NextPage" value="Devam Et" class="btn btn-primary btn-block btn">
+                 
+            </div>
+        </div>
+    </div>
+   
+</form>
+

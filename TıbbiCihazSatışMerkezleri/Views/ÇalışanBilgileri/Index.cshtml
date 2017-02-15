@@ -1,0 +1,280 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<script src="~/scripts/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="~/scripts/jquery-1.12.4.js"></script>
+<script src="~/scripts/jquery-ui.js"></script> 
+<script src="~/scripts/bootstrap-modal.js"></script>
+<script src="~/scripts/bootstrap-modalmanager.js"></script>
+<style>
+    #kvFileinputModal{
+    z-index:9999;
+}
+</style>
+
+<script>
+    var array = [10000];
+    var i = 2;
+    function addRow() {
+        var personelsayısı = Uniqevalue(i++);
+        $tmc = $("#personel").clone().attr('id', personelsayısı);
+        $("h3", $tmc).text('Persel Bilgileri');
+        $("#AdSoyad", $tmc).attr('name', 'personel' + personelsayısı);
+        $("#AdSoyad", $tmc).val("");
+        $("#TcNo", $tmc).attr('name', 'personel' + personelsayısı);
+        $("#TcNo", $tmc).val("");
+        $("#SertifikaTürü", $tmc).attr('name', 'personel' + personelsayısı);
+        $("#SertifikaTürü", $tmc).val("");
+        $("#SertifikaNo", $tmc).attr('name', 'personel' + personelsayısı);
+        $("#SertifikaNo", $tmc).val("");
+        $("#SertifikaTarih", $tmc).attr('name', 'personel' + personelsayısı);
+        $("#SertifikaTarih", $tmc).val("");
+        $("#input", $tmc).attr('name', 'PersonelFile' + personelsayısı);
+        $("#silbtn", $tmc).show();
+        $("#silbtn", $tmc).attr('id', personelsayısı);
+        $tmc.appendTo("form").insertBefore("#eklediv");
+        document.getElementById("item").value = personelsayısı;
+    }
+        function deleteclone(personelid)
+         {
+            $("#" + personelid.id).remove();
+         }
+        function deleteRow(obj) {
+            var index = obj.parentNode.parentNode.rowIndex;
+            var table = document.getElementById("myTableData");
+            table.deleteRow(index);
+
+        }
+        function Uniqevalue(row) {
+            var temp = row;
+            var bayrak = 1;
+            for (var i = 0; i < array.length; i++) {
+                if (row == array[i]) {
+                    bayrak = 0;
+                }
+            }
+            if (bayrak == 1) {
+                array.push(row);
+            }
+            else {
+                temp++;
+            }
+            return temp;
+        }
+        var checkTcNum = function(value) {
+            value = value.toString();
+            var isEleven = /^[0-9]{11}$/.test(value);
+            var totalX = 0;
+            for (var i = 0; i < 10; i++) {
+                totalX += Number(value.substr(i, 1));
+            }
+            var isRuleX = totalX % 10 == value.substr(10,1);
+            var totalY1 = 0;
+            var totalY2 = 0;
+            for (var i = 0; i < 10; i+=2) {
+                totalY1 += Number(value.substr(i, 1));
+            }
+            for (var i = 1; i < 10; i+=2) {
+                totalY2 += Number(value.substr(i, 1));
+            }
+            var isRuleY = ((totalY1 * 7) - totalY2) % 10 == value.substr(9,0);
+            return isEleven && isRuleX && isRuleY;
+        };
+
+
+   function  tckontrol(tcno){
+            var isValid = checkTcNum(tcno.value);
+            console.log('isValid ' , isValid);
+            if (isValid) {
+                tcno.setCustomValidity('');
+                return true;
+            }
+            else {
+                tcno.setCustomValidity('Böyle Bir Tc Numarası Bulunmamaktadır!');
+                return false;
+            }
+        }
+</script>
+<div class="container">
+    @if (TempData["MesulMüdür"] != null)
+    {
+        <p class="alert alert-danger">@TempData["MesulMüdür"]</p>
+    }
+    <h4 class="alert alert-success">III. Çalışan Bilgileri</h4>
+    <form action="/ÇalışanBilgileri/Index" method="post" name="form" id="form" enctype="multipart/form-data">
+        <input type="hidden" id="item" name="item" value="0" />
+        <div class="col-lg-7 col-lg-pull-2 col-md-6 col-md-offset-4 col-xs-12">
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="panel-title-text">1. Firma Sahibi Bilgileri</span></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">T.C. Kimlik No:</label>
+                                <input class="form-control" type="text" placeholder="Tc Numaranız" id="firmaTcNo" onblur="tckontrol(this);" name="firmaTcNo" maxlength="11" pattern=".{11,}" onkeypress=' return event.charCode>= 48 && event.charCode <= 57' required title="11 haneli Tc numaranızı giriniz" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Adı Soyadı:</label>
+                                <input class="form-control" placeholder="Ad Soyad" type="text" name="firmaAdıSoyadı" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Yazılı Hizmet Sözleşmesi:</label>
+                                <input id="input" name="FirmaSahibiPdf" accept=".pdf" title="Lütfen Yazılı Hizmet Sözleşmenizi Yükleyin" type="file" class="file" data-show-upload="false" data-show-caption="true" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="col-lg-7 col-lg-pull-2 col-md-6 col-md-offset-4 col-xs-12">
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="panel-title-text">2.	Mesul Müdür Bilgileri</span></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">T.C. Kimlik No:</label>
+                                <input class="form-control" placeholder="Tc Numaranız" type="text" onblur="tckontrol(this);" name="MüdürTcNo" maxlength="11" pattern=".{11,}" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required title="11 haneli Tc numaranızı giriniz" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Adı Soyadı:</label>
+                                <input class="form-control" placeholder="Ad Soyad" type="text" name="MüdürAdSoyad" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Sertifika No:</label>
+                                <input class="form-control" placeholder="Sertifika Numarası" type="text" id="MüdürSertifikaNo" name="MüdürSertifikaNo" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Sertifika Tarihi:</label>
+                                <input class="form-control" type="date" max=@DateTime.Now.ToString("yyyy-MM-dd") name="MüdürSertifikaTarihi" required />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Sertifika Dosyası:</label>
+                                <input id="input-21" name="MüdürSertifika" accept=".pdf" data-allowed-file-extensions='["pdf"]' title="Lütfen Sertifika Dosyanızı Yükleyin" type="file" class="file" data-show-upload="false" data-show-caption="true" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div id="personel" class="col-lg-7 col-lg-pull-2 col-md-6 col-md-offset-4 col-xs-12">
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="panel-title-text">Personel Bilgileri-1</span></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">T.C. Kimlik No:</label>
+                                <input class="form-control" placeholder="Tc Numaranız" autocomplete="off" required type="text" id="TcNo" onblur="tckontrol(this);" name="personel1" maxlength="11" pattern=".{11,}" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Adı Soyadı:</label>
+                                <input class="form-control" placeholder="Ad Soyad" autocomplete="off" required type="text" id="AdSoyad" name="personel1" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Sertifika No:</label>
+                                <input class="form-control" placeholder="Sertifika Numarası" autocomplete="off" required type="text" id="SertifikaNo" name="personel1" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Sertifika Tarihi:</label>
+                                <input class="form-control" required type="date" autocomplete="off" max=@DateTime.Now.ToString("yyyy-MM-dd") id="SertifikaTarih" name="personel1" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Sertifika Türü:</label>
+                                <input class="form-control" placeholder="Sertifika Türü" autocomplete="off" required type="text" id="SertifikaTürü" name="personel1" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="cardExpiry">Sertifika Dosyası:</label>
+                                <input id="input" name="PersonelFile1" accept=".pdf" title="Lütfen Sertifika Dosyanızı Yükleyin" type="file"  required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="button" id="silbtn" class="btn btn-danger" onclick="deleteclone(this);" style="display:none;" value="Sil" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div id="eklediv" class="col-lg-7 col-lg-pull-2 col-md-6 col-md-offset-4 col-xs-12">
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button style="" type="button" id="ekle" class="btn btn-info" onclick="addRow();">Yeni Perosnel Ekle</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-7 col-lg-pull-2 col-md-6 col-md-offset-4 col-xs-12">
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-body">
+                    <br />
+                    <br />
+                    <button class="btn btn-primary btn-block" type="submit" id="NextPage1" onclick="tckimlikkontorolu();" name="NextPage1">Devam Et</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

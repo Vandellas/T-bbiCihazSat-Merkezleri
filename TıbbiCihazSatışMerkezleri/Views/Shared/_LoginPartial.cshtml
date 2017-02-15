@@ -1,0 +1,35 @@
+﻿  @if (Request.Cookies.Get("User") == null || Request.Cookies.Get("User").Value != "1")
+  {
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a href="/YetkiliGiris/Index" title="Oturum Aç">
+                <span  class="glyphicon glyphicon-log-in glyphicon-align-left " aria-hidden="true"></span>Oturum Aç
+            </a>
+        </li>
+        <li>
+            <a href="/Home/OnayDurumu" title="Onay Kontrol">
+                <span class="glyphicon glyphicon-question-sign glyphicon-align-left " aria-hidden="true"></span>Onay Kontrol
+            </a>
+        </li>
+    </ul>
+  }
+  else
+  {
+      <ul class="nav navbar-nav navbar-right">
+          <li>
+              <a href="/YetkiliGiris/SignOut" title="Çıkış">
+                  <span class="glyphicon glyphicon-log-out " aria-hidden="true"></span>Çıkış
+              </a>
+          </li>
+          <li>
+              <a href="/Firmaincele/Firmagörüntüle" title="Görüntüle">
+                  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Görüntüle
+              </a>
+          </li>
+          <li>
+              <a href="/YetkiliGiris/YetkiVer" title="Yetki Ver">
+                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>Yetki Ver
+              </a>
+          </li>
+      </ul>
+  }
